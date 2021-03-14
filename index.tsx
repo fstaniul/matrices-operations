@@ -1,34 +1,42 @@
-import React, { Component } from 'react';
-import { render } from 'react-dom';
-import { Operation } from './operation';
-import './style.css';
+import React, { Component } from "react";
+import { render } from "react-dom";
+import { Calculator } from "./Calculator";
+import { Operation, Operations } from "./operation";
+import "./style.css";
 
-interface AppProps { }
+interface AppProps {}
 interface AppState {
-  operation: Operations.SCALAR_MULTIPLICATION,
+  operation: Operation.SCALAR_MULTIPLICATION;
 }
 
 class App extends Component<AppProps, AppState> {
   constructor(props) {
     super(props);
     this.state = {
-      operation: Operation.SCALAR_MULTIPLICATION,
+      operation: Operation.SCALAR_MULTIPLICATION
     };
   }
 
   render() {
-    return (
-      const { operation } = this.state;
+    const { operation } = this.state;
 
+    return (
       <div>
         <label>
-          Select operation:
-          <select value={operation} input={(e) => this.setState({ operation: e.target.value })}>
+          <span>Select operation: </span>
+          <select
+            value={operation}
+            onInput={e => this.setState({ operation: e.target.value })}
+          >
+            {Operations.map(operation => (
+              <option value={operation}>{Operation[operation]}</option>
+            ))}
           </select>
+          <Calculator operation={operation} />
         </label>
       </div>
     );
   }
 }
 
-render(<App />, document.getElementById('root'));
+render(<App />, document.getElementById("root"));
